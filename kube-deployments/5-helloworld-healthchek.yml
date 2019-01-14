@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-2
+spec:
+  selector:
+    matchLabels:
+      app: helloworld-2
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: helloworld-2
+        env: dev
+        author: rolindroy
+        application_type: web
+        release-version: v1.2
+    spec:
+      containers:
+      - name: helloworld-2
+        image: rolindroy/helloworld:latest
+        ports:
+        - name: http-port
+          containerPort: 80
+        readinessProbe:
+          initialDelaySeconds: 10
+          httpGet:
+            path: /
+            port: http-port
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 1
+          httpGet:
+            path: /
+            port: http-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-2
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: helloworld-2

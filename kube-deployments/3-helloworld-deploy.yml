@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-2
+spec:
+  selector:
+    matchLabels:
+      app: helloworld-2
+  # tells deployment to run 2 pods matching the template
+  replicas: 2
+  # create pods using pod definition in this template
+  template:
+    metadata:
+      labels:
+        app: helloworld-2
+    spec:
+      containers:
+      - name: helloworld-2
+        image: rolindroy/helloworld:latest
+        ports:
+        - containerPort: 80
