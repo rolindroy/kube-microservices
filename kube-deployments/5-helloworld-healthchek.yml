@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: helloworld-2
-        image: rolindroy/helloworld:latest
+        image: rolindroy/helloworld:v1
         ports:
         - name: http-port
           containerPort: 80
