@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: env-reader-dynamic
+spec:
+  selector:
+    matchLabels:
+      app: env-reader-dynamic
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: env-reader-dynamic
+    spec:
+      containers:
+      - name: env-reader-dynamic
+        image: rolindroy/env-reader:python-v2
+        env:
+        - name: env_value_key
+          valueFrom:
+            configMapKeyRef:
+              name: env-vars
+              key: env_value_key
+        # #https://stackoverflow.com/questions/43969743/logs-in-kubernetes-pod-not-showing-up
+        # - name: PYTHONUNBUFFERED
+        #   value: "0"

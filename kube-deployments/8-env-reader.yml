@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: env-reader
+spec:
+  selector:
+    matchLabels:
+      app: env-reader
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: env-reader
+    spec:
+      containers:
+      - name: env-reader
+        image: rolindroy/env-reader:python-v1
+        env:
+        - name: env_value_key
+          value: "New Env Value"
